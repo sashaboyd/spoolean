@@ -29,32 +29,45 @@ largeLogoLength =
     1200
 
 
-logos : Float -> Float -> Float -> Html msg
-logos h w position =
+overallWidth =
+    360
+
+
+logos : { height : Int, width : Int } -> Float -> Html msg
+logos size position =
     let
+        w =
+            toString size.width
+
+        h =
+            toString (size.height - 5)
+
+        left =
+            (toFloat size.width - 360)
+                / 2
+                |> toString
+
         lineLength =
             smallLogoLength + (largeLogoLength - smallLogoLength) * position
 
         linePosition =
             0 - position * 1100
+
+        thickness =
+            toString (round (1 + 2 * position))
     in
         svg
-            [ height (toString h)
-            , width (toString w)
+            [ width w
+            , height h
             , version "1.1"
-            , viewBox ("0 0 " ++ toString w ++ " " ++ toString h)
+            , viewBox ("0 0 " ++ w ++ " " ++ h)
             ]
             [ g
                 [ stroke "#f53f1d"
-                , strokeWidth "3"
-                , transform "translate(0 -5.7e2)"
+                , strokeWidth thickness
+                , transform ("translate(" ++ left ++ " -570)")
                 ]
-                [ g
-                    [ transform "translate(-9.4 1.9e2)"
-                    ]
-                    [ title [] []
-                    ]
-                , Svg.path
+                [ Svg.path
                     [ strokeDashoffset (toString linePosition)
                     , strokeDasharray (toString lineLength ++ ",3000")
                     , strokeLinecap "round"

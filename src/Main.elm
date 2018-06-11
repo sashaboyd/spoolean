@@ -2,19 +2,24 @@ module Main exposing (..)
 
 import HomeLogos exposing (logos)
 import Html exposing (Html, text, div, h1, img)
-import Html.Attributes exposing (src)
+import Task
+import Window
 
 
 ---- MODEL ----
 
 
 type alias Model =
-    {}
+    { viewportSize : Window.Size
+    }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( {}, Cmd.none )
+    ( { viewportSize = { width = 360, height = 480 } -- assume mobile by default
+      }
+    , Task.perform WindowResized (Window.size)
+    )
 
 
 
@@ -23,11 +28,19 @@ init =
 
 type Msg
     = NoOp
+    | WindowResized Window.Size
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none )
+    case msg of
+        WindowResized size ->
+            ( { model | viewportSize = size }
+            , Cmd.none
+            )
+
+        NoOp ->
+            ( model, Cmd.none )
 
 
 
@@ -37,7 +50,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-        [ logos 480 360 1.0
+        [ logos model.viewportSize 1.0
         ]
 
 
@@ -51,5 +64,5 @@ main =
         { view = view
         , init = init
         , update = update
-        , subscriptions = always Sub.none
+        , subscriptions = always (Window.resizes WindowResized)
         }
