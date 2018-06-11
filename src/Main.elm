@@ -1,6 +1,6 @@
 module Main exposing (..)
 
-import HomeLogos exposing (logos)
+import Home
 import Html exposing (Html, text, div, h1, img)
 import Task
 import Window
@@ -50,7 +50,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-        [ logos model.viewportSize 1.0
+        [ Home.page model.viewportSize 1.0
         ]
 
 
