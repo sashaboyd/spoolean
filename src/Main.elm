@@ -2,7 +2,8 @@ module Main exposing (..)
 
 import Home
 import Html exposing (Html, text, div, h1, img)
-import Ports
+import Logos exposing (Progress, pagePosToProgress)
+import Ports exposing (Move, scroll)
 import Task
 import Window
 
@@ -12,12 +13,14 @@ import Window
 
 type alias Model =
     { viewportSize : Window.Size
+    , logoAnimationProgress : Progress
     }
 
 
 init : ( Model, Cmd Msg )
 init =
     ( { viewportSize = { width = 360, height = 480 } -- assume mobile by default
+      , logoAnimationProgress = 0
       }
     , Task.perform WindowResized (Window.size)
     )
@@ -30,6 +33,7 @@ init =
 type Msg
     = NoOp
     | WindowResized Window.Size
+    | Scrolled Move
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -37,6 +41,11 @@ update msg model =
     case msg of
         WindowResized size ->
             ( { model | viewportSize = adjustSize size }
+            , Cmd.none
+            )
+
+        Scrolled ( oldPos, newPos ) ->
+            ( { model | logoAnimationProgress = pagePosToProgress newPos }
             , Cmd.none
             )
 
@@ -52,13 +61,25 @@ adjustSize size =
 
 
 
+---- SUBSCRIPTIONS ----
+
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Sub.batch
+        [ Window.resizes WindowResized
+        , scroll Scrolled
+        ]
+
+
+
 ---- VIEW ----
 
 
 view : Model -> Html Msg
 view model =
     div []
-        [ Home.page model.viewportSize 1.0
+        [ Home.page model.viewportSize model.logoAnimationProgress
         ]
 
 
@@ -72,5 +93,5 @@ main =
         { view = view
         , init = init
         , update = update
-        , subscriptions = always (Window.resizes WindowResized)
+        , subscriptions = subscriptions
         }

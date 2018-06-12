@@ -1,4 +1,4 @@
-port module Ports exposing (scroll)
+port module Ports exposing (scroll, Move)
 
 
 type alias Move =

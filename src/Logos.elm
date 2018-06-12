@@ -1,4 +1,4 @@
-module Logos exposing (logos)
+module Logos exposing (logos, Progress, pagePosToProgress)
 
 import Filters exposing (dropShadow)
 import Html exposing (Html)
@@ -27,6 +27,10 @@ import Svg.Attributes
         )
 
 
+type alias Progress =
+    Float
+
+
 smallLogoLength : Float
 smallLogoLength =
     830
@@ -42,17 +46,17 @@ overallWidth =
     360
 
 
-logos : { height : Int, width : Int } -> Float -> List (Html msg)
-logos size position =
+logos : { height : Int, width : Int } -> Progress -> List (Html msg)
+logos size progress =
     let
         lineLength =
-            smallLogoLength + (largeLogoLength - smallLogoLength) * position
+            smallLogoLength + (largeLogoLength - smallLogoLength) * (1 - progress)
 
         linePosition =
-            0 - position * 1100
+            1100 * (progress - 1)
 
         thickness =
-            toString (round (1 + 2 * position))
+            toString (round (3 - 1 * progress))
     in
         [ defs [] [ dropShadow "dropShadow" 1 1 1 ]
         , Svg.path
@@ -68,3 +72,8 @@ logos size position =
             ]
             []
         ]
+
+
+pagePosToProgress : Float -> Progress
+pagePosToProgress scrollPos =
+    max 0 (min 1 (scrollPos / 100))
