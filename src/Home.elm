@@ -43,10 +43,10 @@ page : { height : Int, width : Int } -> Float -> Html msg
 page size position =
     let
         w =
-            toString size.width
+            toString (max size.width 360)
 
         h =
-            toString (size.height - 5)
+            toString (max (size.height - 5) 480)
 
         left =
             (toFloat size.width / 2)

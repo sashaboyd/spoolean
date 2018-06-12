@@ -35,12 +35,19 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         WindowResized size ->
-            ( { model | viewportSize = size }
+            ( { model | viewportSize = adjustSize size }
             , Cmd.none
             )
 
         NoOp ->
             ( model, Cmd.none )
+
+
+adjustSize size =
+    { size
+        | width = min 600 size.width
+        , height = size.height - 24
+    }
 
 
 
