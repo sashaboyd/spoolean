@@ -1,5 +1,6 @@
 module Logos exposing (logos, Progress, pagePosToProgress)
 
+import Ease
 import Filters exposing (dropShadow)
 import Html exposing (Html)
 import Html.Attributes exposing (style)
@@ -49,14 +50,17 @@ overallWidth =
 logos : { height : Int, width : Int } -> Progress -> List (Html msg)
 logos size progress =
     let
+        linePercentage =
+            Ease.inOutQuad (1 - progress)
+
         lineLength =
-            smallLogoLength + (largeLogoLength - smallLogoLength) * (1 - progress)
+            smallLogoLength + (largeLogoLength - smallLogoLength) * linePercentage
 
         linePosition =
-            1100 * (progress - 1)
+            -1100 * linePercentage
 
         thickness =
-            toString (round (3 - 1 * progress))
+            toString (round (2 + linePercentage))
     in
         [ defs [] [ dropShadow "dropShadow" 1 1 1 ]
         , Svg.path
@@ -76,4 +80,9 @@ logos size progress =
 
 pagePosToProgress : Float -> Progress
 pagePosToProgress scrollPos =
-    max 0 (min 1 (scrollPos / 100))
+    scrollPos
+        / 85
+        -- clip the value at a maximum of 1.0
+        |> min 1
+        -- make sure the value never goes below 0.0
+        |> max 0
