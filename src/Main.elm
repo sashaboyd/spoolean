@@ -2,9 +2,9 @@ module Main exposing (..)
 
 import Home
 import Html exposing (Html, text, div, h1, img)
-import Logos exposing (Progress, pagePosToProgress)
 import Ports exposing (Move, scroll)
 import Task
+import View.Logos exposing (Progress, pagePosToProgress)
 import Window
 
 
@@ -79,7 +79,7 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
     div []
-        [ Home.page model.viewportSize model.logoAnimationProgress
+        [ Home.page model
         ]
 
 

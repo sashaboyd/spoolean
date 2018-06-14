@@ -1,4 +1,4 @@
-module Logos exposing (logos, Progress, pagePosToProgress)
+module View.Logos exposing (logos, Progress, pagePosToProgress)
 
 import Ease
 import Filters exposing (dropShadow)
