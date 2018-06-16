@@ -2,8 +2,9 @@ module View.Structure exposing (header, animatedContainer, pageContainer)
 
 import Html exposing (Html, h1, nav, ul, li, a, text, div)
 import Html.Attributes exposing (href, class)
-import Journeys exposing (..)
+import Journeys exposing (Journey(..), entryLink)
 import List
+import Messaging exposing (Msg(UpdateJourney))
 import View.Banner exposing (banner)
 import View.Logos exposing (Progress)
 import Window exposing (Size)
@@ -11,10 +12,10 @@ import Window exposing (Size)
 
 mainRoutes : List Journey
 mainRoutes =
-    [ Home, About, Personal Nothing, Engineering Nothing ]
+    [ Home, About, Personal, Engineering ]
 
 
-header : Html msg
+header : Html Msg
 header =
     Html.header []
         [ h1 [ class "screen-reader-text" ] [ text "Sasha Boyd" ]
@@ -23,12 +24,12 @@ header =
         ]
 
 
-makeNavLink : Journey -> Html msg
+makeNavLink : Journey -> Html Messaging.Msg
 makeNavLink journey =
-    li [] [ a [ href (link journey) ] [ text (label journey) ] ]
+    li [] [ Html.map UpdateJourney (entryLink journey) ]
 
 
-animatedContainer : Progress -> Size -> List (Html msg) -> Html msg
+animatedContainer : Progress -> Size -> List (Html Msg) -> Html Msg
 animatedContainer progress size contents =
     div [ class "container" ]
         [ header
@@ -37,6 +38,6 @@ animatedContainer progress size contents =
         ]
 
 
-pageContainer : Size -> List (Html msg) -> Html msg
+pageContainer : Size -> List (Html Msg) -> Html Msg
 pageContainer size =
     animatedContainer 1.0 size

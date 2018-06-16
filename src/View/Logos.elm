@@ -28,6 +28,8 @@ import Svg.Attributes
         )
 
 
+{-| The progress of something (e.g. an animation)
+-}
 type alias Progress =
     Float
 
