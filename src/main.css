@@ -21,3 +21,13 @@ img {
     margin: 20px 0;
     max-width: 200px;
 }
+
+/* make sure the user can click through the transparent areas of an SVG */
+svg {
+    pointer-events: none;
+}
+
+/* allow children of an SVG to receive pointer events */
+svg * {
+    pointer-events: auto;
+}
