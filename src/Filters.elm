@@ -1,9 +1,10 @@
 module Filters exposing (dropShadow)
 
-import Html exposing (Html)
-import Svg
+import Html.Styled exposing (Html)
+import Svg.Styled
     exposing
-        ( filter
+        ( Svg
+        , filter
         , feGaussianBlur
         , feOffset
         , feComponentTransfer
@@ -11,7 +12,7 @@ import Svg
         , feMerge
         , feMergeNode
         )
-import Svg.Attributes
+import Svg.Styled.Attributes
     exposing
         ( height
         , width
@@ -27,7 +28,7 @@ import Svg.Attributes
         )
 
 
-dropShadow : String -> Float -> Int -> Int -> Html msg
+dropShadow : String -> Float -> Int -> Int -> Svg msg
 dropShadow id_ blur offsetX offsetY =
     filter
         [ id "dropshadow"

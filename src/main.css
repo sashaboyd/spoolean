@@ -1,25 +1,55 @@
 html {
+    box-sizing: border-box;
+    font-size: 6px;
     background-color: #CCCCCC;
-    font-size: 24px;
+    transition: 300ms ease-in-out;
+    transition-property
+        : width
+        , max-width
+        , min-width
+        , height
+        , max-height
+        , min-height
+        , top
+        , bottom
+        , left
+        , right
+        , margin
+        , padding
+        , color
+        , background-color
+        , border-color
+        ;
+}
+
+@media (min-width: 800px) {
+    html {
+        font-size: 8px;
+    }
+}
+
+html * {
+    transition: inherit;
+    box-sizing: inherit;
 }
 
 body {
     width: 100%;
-    max-width: 600px;
-    margin: 1rem auto;
     font-family: 'Source Sans Pro', 'Trebuchet MS', 'Lucida Grande', 'Bitstream Vera Sans', 'Helvetica Neue', sans-serif;
+    max-width: 72rem;
+    min-height: 190vh;
+    margin: 2rem auto;
+    font-size: 2rem;
+    line-height: 3rem;
     text-align: center;
     background-color: #FFEBD6;
     color: #293c4b;
 }
 
-h1 {
-    font-size: 30px;
-}
 
-img {
-    margin: 20px 0;
-    max-width: 200px;
+h1 {
+    position: absolute;
+    clip: rect(1px, 1px, 1px, 1px);
 }
 
 /* make sure the user can click through the transparent areas of an SVG */

@@ -9,12 +9,14 @@ module Journeys
         , entryLink
         )
 
-import UrlParser exposing ((</>), s, top)
-import Html exposing (Html, a, text)
-import Html.Attributes exposing (href)
-import Html.Events exposing (onWithOptions, defaultOptions)
+import Css exposing (..)
+import UrlParser exposing ((</>), s)
+import Html.Styled exposing (Html, a, text, styled)
+import Html.Styled.Attributes exposing (href, css)
+import Html.Styled.Events exposing (onWithOptions, defaultOptions)
 import Json.Decode as Json
 import Navigation
+import View.Colors as Colors
 
 
 type Journey
@@ -65,7 +67,7 @@ path : Journey -> UrlParser.Parser a a
 path journey =
     case journey of
         Home ->
-            top
+            UrlParser.top
 
         About ->
             s "about"
@@ -95,7 +97,13 @@ link journey =
 
 entry : Journey -> List (Html Msg) -> Html Msg
 entry journey =
-    a
+    styled a
+        [ textDecoration none
+        , fontFamilies [ "Raleway", "sans-serif" ]
+        , fontWeight (int 300)
+        , color Colors.forward
+        , hover [ color Colors.forwardBright ]
+        ]
         [ href (link journey)
         , onWithOptions "click"
             { defaultOptions | preventDefault = True }

@@ -1,16 +1,16 @@
 module View.Banner exposing (banner)
 
-import Html exposing (Html)
-import Html.Attributes exposing (style)
-import Svg
+import Html.Styled.Attributes exposing (style)
+import Svg.Styled
     exposing
-        ( svg
+        ( Svg
+        , svg
         , g
         , title
         , defs
         , rect
         )
-import Svg.Attributes
+import Svg.Styled.Attributes
     exposing
         ( d
         , transform
@@ -41,7 +41,7 @@ overallWidth =
     360
 
 
-banner : { height : Int, width : Int } -> Progress -> Html msg
+banner : { height : Int, width : Int } -> Progress -> Svg msg
 banner size progress =
     let
         w =

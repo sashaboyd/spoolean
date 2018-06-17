@@ -1,11 +1,10 @@
 module Main exposing (..)
 
 import Home
-import Html exposing (Html, text, div, h1, img)
+import Html.Styled as Html exposing (Html, text, div, h1, img)
 import Messaging exposing (Msg(..), init, update)
 import Model exposing (Model)
 import Ports exposing (scroll)
-import View.Logos exposing (Progress, pagePosToProgress)
 import Window
 
 
