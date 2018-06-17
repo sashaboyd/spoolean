@@ -35,17 +35,21 @@ html * {
 
 body {
     width: 100%;
-    font-family: 'Source Sans Pro', 'Trebuchet MS', 'Lucida Grande', 'Bitstream Vera Sans', 'Helvetica Neue', sans-serif;
     max-width: 72rem;
     min-height: 190vh;
     margin: 2rem auto;
     font-size: 2rem;
     line-height: 3rem;
+    font-family: 'Montserrat', 'Bitstream Vera Sans', 'Helvetica Neue', sans-serif;
     text-align: center;
     background-color: #FFEBD6;
     color: #293c4b;
 }
 
+h1, h2, h3 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+}
 
 h1 {
     position: absolute;
